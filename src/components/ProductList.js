@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Product from './Product';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import {addToCart} from "../components/actions/cartActions";
+
  
  
 class ProductList extends Component
@@ -38,8 +39,8 @@ class ProductList extends Component
             <div className="container">
                 <h2>Product List</h2>
 				<input type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchSpace(e)} />
-                <br/>
-                <div className="row">
+				<hr/>
+                <div>
  
                     {
                         items.map(product => <Product product={product} addToCart={this.addToCart} inCart={this.props.cart.length>0 && this.props.cart.filter(e => e.product.id === product.id).length > 0 } key={product.id} /> )

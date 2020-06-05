@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {removeProduct} from "./actions/productActions";
  
 class Product extends Component
 {
@@ -16,39 +18,50 @@ class Product extends Component
             inCart: true
         })
     }
+	 
+    handleRemove = (e) => {
+		console.log(this.props);
+        this.props.removeProduct(this.props.product.id);
+    }
  
     render() {
  
         const { product } = this.props;
  
         return (
-            <div className="col-md-3">
-                <figure className="card card-product">
-                    <div className="img-wrap">
+		<fragment>
+            <div className="col-md-12" className="row">
+                <figure className="card card-product" className="col-md-12">
+                    <div className="img-wrap" className="col-md-3">
                         <img className="img-responsive" src={product.image} />
                     </div>
-                    <figcaption className="info-wrap">
+					<div className="img-wrap" className="col-md-3">
                         <h4 className="title">{product.title}</h4>
+                    </div>
+                    <figcaption className="info-wrap"  className="col-md-4">
                         <p className="desc">{product.description}</p>
                     </figcaption>
-                    <div className="bottom-wrap">
- 
-                        {
-                            this.state.inCart?(
-                                <span className="btn btn-success">Added to cart</span>
-                            ) : (
-                                <a href="#" onClick={this.addToCart} className="btn btn-sm btn-primary float-right">Add to cart</a>
-                            )
-                        }
- 
-                        <div className="price-wrap h5">
-                            <span className="price-new">${product.price}</span>
-                        </div>
-                    </div>
+					<div className="col-md-2">
+					<form onSubmit={this.handleSubmit}>
+						<div className="col-xs-2">
+						  <button type="button" onClick={this.handleRemove} className="btn btn-link btn-xs">
+							  <span className="glyphicon glyphicon-trash"> </span>
+						  </button>
+						</div>
+					</form>
+				</div>
                 </figure>
             </div>
+			<hr/>
+			</fragment>
         )
     }
 }
+const mapDispatchToProps = (dispatch) => {
  
-export default Product;
+    return {
+        removeProduct: (productId) => dispatch(removeProduct(productId))
+    }
+};
+ 
+export default connect(null, mapDispatchToProps)(Product);

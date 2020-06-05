@@ -12,6 +12,16 @@ const initialState = {
 };
  
 const productReducer = (state = initialState, action) => {
+	 switch(action.type) {
+		case 'REMOVE_PRODUCT':
+			console.log(JSON.stringify(state) +'Yasir');
+            return {
+                ...state,
+				products: state.products.filter(item => item.id != action.payload.productId)
+            };
+        default:
+            return state;
+	 }
  
     return state;
 };
